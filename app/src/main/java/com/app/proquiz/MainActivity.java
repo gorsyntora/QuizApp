@@ -56,22 +56,21 @@ public class MainActivity extends AppCompatActivity {
 
      WebBuilder.build(webView);
 
-      //  webView.loadUrl("https://www.sports.ru");
-
-        initApp();
+         initApp();
     }
 
 
     void initApp() {
 
         appSettings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
-        if (!isConnected()) {
-            //   webView.setVisibility(View.INVISIBLE);
-            View v = findViewById(R.id.message_layout);
-            v.setVisibility(View.VISIBLE);
 
-        } else {
+
             if (appSettings.contains(APP_LINK)) {
+                if (!isConnected()) {
+                    View v = findViewById(R.id.message_layout);
+                    v.setVisibility(View.VISIBLE);
+                }
+              else
                 webView.loadUrl(appSettings.getString(APP_LINK, null));
             } else if
             (checkIsEmu())
@@ -79,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
             else
                 getFirebaseData();
         }
-    }
+
 
     void loadAppActivity() {
         Intent intent = new Intent(getApplicationContext(), ProQuizActivity.class);
